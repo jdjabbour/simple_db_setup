@@ -9,12 +9,12 @@ class MainTestCase(unittest.TestCase):
     def setUp(self):
         self.db_name = ':memory:'
         self.conn = ConnectionManager(self.db_name).create_db_connection()
-
         self.cur = ConnectionManager(self.db_name).create_db_cursor(self.conn)
 
     def test_connection(self):
         self.assertIsNotNone(self.conn)
 
+    def test_cursor(self):
         self.assertIsInstance(self.cur, sqlite3.Cursor)
 
     def tearDown(self):
