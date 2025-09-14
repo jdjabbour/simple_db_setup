@@ -5,11 +5,17 @@ import sqlite3
 
 @dataclass
 class ConnectionManager:
-
+    db_name: str
     conn: object = None
     cur: object = None  
 
-    def create_conn(self: object) -> object:
+    def connect(self: object) -> object:
+        self.connect_to_db()
+        self.create_cursor(self.conn)
+        if self.conn and self.cur:
+            return self.conn, self.cur
+
+    def create_db_connection(self: object):
         try:
             self.conn = sqlite3.connect('products.db')
             return self.conn
@@ -17,15 +23,15 @@ class ConnectionManager:
             print(f"!! ERROR CREATING CONNECTION !!")
             return 0
              
-    def create_cur(self):
+    def create_db_cursor(self, conn):
         try:
-            self.cur = self.conn.cursor()
+            self.cur = conn.cursor()
             return self.cur
         except Exception as e:
             print(f"!! ERROR CREATING CURSOR !!")
             return 0 
 
-    def close_connection(self):
+    def close_db_connection(self):
         try:
             self.conn.close()
             return 1

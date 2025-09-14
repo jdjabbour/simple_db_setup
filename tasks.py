@@ -20,19 +20,19 @@ def run_app(context):
 
 
 ## Tests
-# @task
-# def run_tests(context):
-#     """
-#     :summary: This task runs the small unittests
-
-#     """
-#     python_path = os.pathsep.join(["tests", "src"])
-#     command = f"PYTHONPATH={python_path} python3 -m unittest test_main -v --failfast -b"
-#     context.run(command, echo=True)
-
 @task
-def run_tests(context, var):
-    print(var)
+def run_tests(context, filename):
+    """
+    :summary: This task runs the small unittests
+
+    """
+    python_path = os.pathsep.join(["tests", "src"])
+    command = f"PYTHONPATH={python_path} python3 -m unittest tests/small/{filename} -v --failfast"
+    context.run(command, echo=True)
+
+# @task
+# def run_tests(context, var):
+#     print(var)
 
 
 
@@ -87,6 +87,7 @@ def delete_item(context):
         DataManager().add_products(new_prods)
     except Exception as e:
         print(f"DB UPDATE ERROR: {e}")
+
 
 ## Documents
 @task
